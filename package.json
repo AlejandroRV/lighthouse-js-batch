@@ -1,0 +1,37 @@
+{
+  "name": "lighthouse-js-batch",
+  "version": "0.1.0",
+  "description": "A Node JS package that runs multiple Lighthouse audit reports programmatically",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlejandroRV/lighthouse-js-batch.git"
+  },
+  "keywords": [
+    "lighthouse",
+    "nodejs",
+    "performance",
+    "seo",
+    "best-practices",
+    "pwa",
+    "accessibility"
+  ],
+  "author": "Alejandro Rodriguez Vazquez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlejandroRV/lighthouse-js-batch/issues"
+  },
+  "homepage": "https://github.com/AlejandroRV/lighthouse-js-batch#readme",
+  "dependencies": {
+    "chrome-launcher": "^0.15.1",
+    "lighthouse": "^9.6.8"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2"
+  }
+}
