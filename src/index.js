@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 const fs = require('fs');
 const lighthouse = require('lighthouse');
 const chromeLauncher = require('chrome-launcher');
