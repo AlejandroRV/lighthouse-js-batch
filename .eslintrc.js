@@ -14,5 +14,6 @@ module.exports = {
     indent: ['error', 2],
     'no-await-in-loop': 0,
     'no-plusplus': 0,
+    'import/extensions': 0,
   },
 };
