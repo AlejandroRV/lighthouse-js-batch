@@ -2,25 +2,33 @@
   "name": "lighthouse-js-batch",
   "version": "0.1.0",
   "description": "A Node JS package that runs multiple Lighthouse audit reports programmatically",
-  "main": "src/index.js",
+  "main": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node samples"
+    "build": "tsc --project tsconfig.esm.json && tsc --project tsconfig.cjs.json",
+    "start": "node examples"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AlejandroRV/lighthouse-js-batch.git"
   },
+  "files": [
+    "lib"
+  ],
   "keywords": [
-    "lighthouse",
+    "batch",
+    "js",
     "nodejs",
+    "lighthouse",
     "performance",
     "seo",
     "best-practices",
     "pwa",
     "accessibility"
   ],
-  "author": "Alejandro Rodriguez Vazquez",
+  "author": "Alejandro Rodriguez",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/AlejandroRV/lighthouse-js-batch/issues"
@@ -34,5 +42,10 @@
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2"
+  },
+  "exports": {
+    "import": "./lib/esm/index.js",
+    "require": "./lib/cjs/index.js",
+    "default": "./lib/esm/index.js"
   }
 }
