@@ -10,7 +10,7 @@ const DESKTOP_EMULATION_METRICS = {
 const webPagesList = [
   {
     url: 'https://www.example.com/',
-    name: `my_page_${new Date().toISOString()}`,
+    fileName: `my_page_${new Date().toISOString()}`,
     execute: 10, // not implemented yet
     configs: {
       extends: 'lighthouse:default',

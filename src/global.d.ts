@@ -1,14 +1,13 @@
 interface Result {
-  name: string,
+  fileName: string,
   reports: string|string[],
   lhr: LH.Result,
-  output?: string|string[]
+  outputFormats?: string|string[]
 }
 
 interface WebPage {
   url: string
-  name: string
-  execute?: number // not implemented yet
+  fileName: string,
   configs?: Partial<LH.Config.Json>
   flags?: Partial<LH.CliFlags>
 }
