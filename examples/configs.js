@@ -7,56 +7,52 @@ const DESKTOP_EMULATION_METRICS = {
   disabled: false,
 };
 
-const webPagesList = [
-  {
-    url: 'https://www.example.com/',
-    fileName: `my_page_${new Date().toISOString()}`,
-    execute: 10, // not implemented yet
-    configs: {
-      extends: 'lighthouse:default',
-      settings: {
-        formFactor: 'desktop',
-        throttling: {
-          rttMs: 40,
-          throughputKbps: 10 * 1024,
-          cpuSlowdownMultiplier: 1,
-          requestLatencyMs: 0, // 0 means unset
-          downloadThroughputKbps: 0,
-          uploadThroughputKbps: 0,
-        },
-        screenEmulation: DESKTOP_EMULATION_METRICS,
-        emulatedUserAgent: USERAGENT_DESKTOP,
-        skipAudits: ['uses-http2'],
+const DESKTOP_SETUP = {
+  url: 'https://www.arodriguezv.me/',
+  fileName: `dynamic_filename_report_${new Date().toISOString()}`,
+  execute: 10, // not implemented yet
+  configs: {
+    extends: 'lighthouse:default',
+    settings: {
+      formFactor: 'desktop',
+      throttling: {
+        rttMs: 40,
+        throughputKbps: 10 * 1024,
+        cpuSlowdownMultiplier: 1,
+        requestLatencyMs: 0, // 0 means unset
+        downloadThroughputKbps: 0,
+        uploadThroughputKbps: 0,
       },
-      // maxWaitForFcp: 15 * 1000,
-      // maxWaitForLoad: 35 * 1000,
-    },
-    flags: {
-      output: ['json', 'html', 'csv'],
+      screenEmulation: DESKTOP_EMULATION_METRICS,
+      emulatedUserAgent: USERAGENT_DESKTOP,
+      skipAudits: ['uses-http2'],
     },
   },
-  // {
-  //   url: 'https://www.example.com/',
-  //   name: 'test_Page_2',
-  //   configs: {
-  //     maxWaitForFcp: 15 * 1000,
-  //     maxWaitForLoad: 35 * 1000,
-  //     formFactor: 'desktop',
-  //   },
-  //   flags: {
-  //     onlyCategories: ['performance'],
-  //     screenEmulation: { disabled: true },
-  //     output: ['html'],
-  //   },
-  // },
-  // {
-  //   url: 'https://www.example.com/',
-  //   name: 'test_page_3',
-  //   configs: {},
-  //   flags: {
-  //     output: ['html', 'csv'],
-  //   },
-  // },
+  flags: {
+    output: ['json', 'html', 'csv'],
+  },
+};
+
+const MOBILE_SETUP = {
+  url: 'https://www.arodriguezv.me',
+  fileName: 'static_filename_report',
+  configs: {
+    extends: 'lighthouse:default',
+    settings: {
+      maxWaitForFcp: 15 * 1000,
+      maxWaitForLoad: 35 * 1000,
+      skipAudits: ['uses-http2'],
+    },
+  },
+  flags: {
+    onlyCategories: ['performance'],
+    output: 'html',
+  },
+};
+
+const webPagesList = [
+  DESKTOP_SETUP,
+  MOBILE_SETUP
 ];
 
 const defaultConfigs = {
