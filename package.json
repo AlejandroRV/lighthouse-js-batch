@@ -5,9 +5,9 @@
   "main": "./lib/esm/index.js",
   "types": "./lib/types/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --project tsconfig.esm.json && tsc --project tsconfig.cjs.json",
-    "start": "node examples"
+    "start": "node examples",
+    "release": "standard-version"
   },
   "type": "module",
   "repository": {
@@ -41,7 +41,8 @@
   "devDependencies": {
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.2"
+    "eslint-plugin-import": "^2.25.2",
+    "standard-version": "^9.5.0"
   },
   "exports": {
     "import": "./lib/esm/index.js",
