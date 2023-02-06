@@ -4,7 +4,7 @@
     "target": "ES2015",
     "outDir": "lib/cjs",
     "declarationDir": "lib/types",
-    "module": "CommonJS"
+    "module": "CommonJS",
   },
   "files": ["src/index.ts"],
   "include": ["src/**/*"],
