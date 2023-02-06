@@ -3,6 +3,7 @@ module.exports = {
     commonjs: true,
     es2021: true,
     node: true,
+    mocha: true,
   },
   extends: 'airbnb-base',
   overrides: [
@@ -16,4 +17,8 @@ module.exports = {
     'no-plusplus': 0,
     'import/extensions': 0,
   },
+  ignorePatterns: [
+    'lib/',
+    'reports/',
+  ],
 };
