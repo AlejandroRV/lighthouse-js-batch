@@ -1,6 +1,7 @@
 import fs from 'fs';
 import lighthouse from 'lighthouse';
-import ChromeLauncher from 'chrome-launcher';
+import { launch } from 'chrome-launcher';
+import { LBResult, RunAuditsParams, UrlSetup } from './index.d';
 
 /**
  *  Writes all the files for each report with their corresponding format
@@ -8,7 +9,7 @@ import ChromeLauncher from 'chrome-launcher';
  * @param outputPath 
  * @returns {Promise<>}
  */
-async function writeReports(lighthouseResult:Result, outputPath:string) {
+async function writeReports(lighthouseResult:LBResult, outputPath:string) {
   const promises:Promise<void>[] = [];
 
   if (lighthouseResult?.outputFormats) {
@@ -42,9 +43,9 @@ async function writeReports(lighthouseResult:Result, outputPath:string) {
  * @returns {Promise<>}
  */
 async function lighthouseRunner(url:string, lhFlags:Partial<LH.CliFlags> = {}, lhConfigs:Partial<LH.Config.Json> = { extends: 'lighthouse:default' }, chromeFlags:string[] = []) {
-  const chrome = await ChromeLauncher.launch({ chromeFlags });
+  const chrome = await launch({ chromeFlags });
   // https://github.com/GoogleChrome/lighthouse/blob/888bd6dc9d927a734a8e20ea8a0248baa5b425ed/typings/externs.d.ts#L122
-  const runnerResult = await lighthouse(url, { ...lhFlags, port: chrome.port }, lhConfigs);
+  const runnerResult = await lighthouse(url, { ...lhFlags, port: chrome?.port }, lhConfigs);
 
   await chrome.kill();
 
@@ -52,37 +53,37 @@ async function lighthouseRunner(url:string, lhFlags:Partial<LH.CliFlags> = {}, l
 }
 
 /**
- * Runs many lighthouse audit reports synchronously for each of the web page or web app configurations passed and returns an array with the result of each report.
+ * Runs many lighthouse audit reports synchronously for each of url passed and returns an array with the result of each report.
  * if decided it can ouput and write the result in the desired file format(.json, .csv, .html) as the lighthouse-cli does.
  * @async
- * @param {WebPage[]} webPagesList list of each webpage or webapp configuration to run the report
+ * @param {UrlSetup[]} urls list of each webpage or webapp configuration to run the report
  * @param {Partial<LH.CliFlags>} lhrDefaultFlags general lighthouse flags to use if no individual flags passed. 
- * @param {Partial<LH.Config.Json>} lhDefaultConfigs general lighthouse configs to use if no individual configs passed
+ * @param {Partial<LH.Config.Json>} lhrDefaultConfigs general lighthouse configs to use if no individual configs passed
  * @param {string[]} chromeDefaultFlags general chrome default flags to use if no individual chrome flags passed.
  * @param {string} outputPath path to output the reports if at leats there is one file type configured in flags.output, if no default or individual flag configured then there is no usage 
- * @returns {Promise<Result[]>} an array that contains the result of each lighthouse report
+ * @returns {Promise<LBResult[]>} an array that contains the result of each lighthouse report
  */
-export async function getReports({
-  webPagesList, lhrDefaultFlags = {}, lhDefaultConfigs = {}, chromeDefaultFlags = [], outputPath = 'reports',
-}: GetReportsParams): Promise<Result[]> {
+export async function runAudits({
+  urls, lhrDefaultFlags = {}, lhrDefaultConfigs = {}, chromeDefaultFlags = [], outputPath = 'reports',
+}: RunAuditsParams): Promise<LBResult[]> {
   const chromeFlags = [...chromeDefaultFlags];
-  const listOfResults:Result[] = [];
+  const listOfResults:LBResult[] = [];
 
-  for (let i = 0; i < webPagesList.length; i++) {
+  for (let i = 0; i < urls.length; i++) {
     // join default configs and individual configs
-    const lhFlags = { ...lhrDefaultFlags, ...webPagesList[i]?.flags };
-    const lhConfigs = { extends: 'lighthouse:default', ...lhDefaultConfigs, ...webPagesList[i]?.configs };
+    const lhFlags = { ...lhrDefaultFlags, ...urls[i]?.flags };
+    const lhConfigs = { extends: 'lighthouse:default', ...lhrDefaultConfigs, ...urls[i]?.configs };
     // Await inside the for loop on purpose to wait for each report execution
     // otherwise the report/chrome would run asynchronously which could impact the analysis
     // Enabling an async execution would imply to know exactly many factors i.e. cores, network etc.
-    const analysis = await lighthouseRunner(webPagesList[i].url, lhFlags, lhConfigs, chromeFlags);
+    const analysis = await lighthouseRunner(urls[i].url, lhFlags, lhConfigs, chromeFlags);
 
     if (analysis?.report && !Array.isArray(analysis.report)) {
       analysis.report = [analysis.report];
     }
  
-    const result:Result = {
-      fileName: webPagesList[i]?.fileName,
+    const result:LBResult = {
+      fileName: urls[i]?.fileName,
       reports: analysis?.report,
       lhr: analysis.lhr,
       outputFormats: lhFlags?.output,
@@ -98,3 +99,4 @@ export async function getReports({
   return listOfResults;
 }
 
+export { RunAuditsParams, LBResult, UrlSetup };
