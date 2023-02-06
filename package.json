@@ -1,6 +1,6 @@
 {
   "name": "lighthouse-js-batch",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "A Node JS package that runs multiple Lighthouse audit reports programmatically",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
