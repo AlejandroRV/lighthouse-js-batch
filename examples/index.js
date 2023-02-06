@@ -1,16 +1,8 @@
-import { getReports } from '../lib/esm/index.js';
+import { runAudits } from '../lib/esm/index.js';
 import configs from './configs.js';
 
-const {
-  webPagesList,
-  outputPath,
-  lhrDefaultConfigs,
-  lhrDefaultFlags,
-  chromeDefaultFlags,
-} = await configs;
-
-const lhResults = await getReports({
-  webPagesList, lhrDefaultFlags, lhrDefaultConfigs, chromeDefaultFlags, outputPath,
+// configs for mobile and desktop with different output formats
+runAudits(configs).then((results) => {
+  // use the array results to do whatever you want
+  console.log('Performance Score url 1: ', results[0].lhr.categories.performance.score * 100);
 });
-
-console.log('Result page 1: ', lhResults[0].lhr.categories.performance.score * 100);

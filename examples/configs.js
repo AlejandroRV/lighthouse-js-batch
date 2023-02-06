@@ -7,10 +7,10 @@ const DESKTOP_EMULATION_METRICS = {
   disabled: false,
 };
 
+// desktop setup, all categories, json, html, csv output
 const DESKTOP_SETUP = {
   url: 'https://www.arodriguezv.me/',
   fileName: `dynamic_filename_report_${new Date().toISOString()}`,
-  execute: 10, // not implemented yet
   configs: {
     extends: 'lighthouse:default',
     settings: {
@@ -19,7 +19,7 @@ const DESKTOP_SETUP = {
         rttMs: 40,
         throughputKbps: 10 * 1024,
         cpuSlowdownMultiplier: 1,
-        requestLatencyMs: 0, // 0 means unset
+        requestLatencyMs: 0,
         downloadThroughputKbps: 0,
         uploadThroughputKbps: 0,
       },
@@ -33,6 +33,7 @@ const DESKTOP_SETUP = {
   },
 };
 
+// mobile setup, performance only, html output
 const MOBILE_SETUP = {
   url: 'https://www.arodriguezv.me',
   fileName: 'static_filename_report',
@@ -50,19 +51,15 @@ const MOBILE_SETUP = {
   },
 };
 
-const webPagesList = [
-  DESKTOP_SETUP,
-  MOBILE_SETUP
-];
-
-const defaultConfigs = {
-  webPagesList,
+export default {
+  urls: [
+    DESKTOP_SETUP,
+    MOBILE_SETUP,
+  ],
   outputPath: 'reports',
   lhrDefaultConfigs: {},
+  chromeDefaultFlags: ['--headless'],
   lhrDefaultFlags: {
     logLevel: 'info',
   },
-  chromeDefaultFlags: ['--headless'],
 };
-
-export default defaultConfigs;
