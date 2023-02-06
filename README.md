@@ -92,3 +92,5 @@ Important links from the lighthouse repo
 - For more info on configurations take a look at the doc [lighthouse configuration](https://github.com/GoogleChrome/lighthouse/blob/main/docs/configuration.md).
 
 - Notice that we use flags and configs, but those can be slightly different from the CLI, for more info check [Differences from CLI flags](https://github.com/GoogleChrome/lighthouse/blob/HEAD/docs/readme.md#differences-from-cli-flags).
+
+- [Example of individual configs for mobile and desktop with different output formats, and running headless Chrome.](https://github.com/AlejandroRV/lighthouse-js-batch/blob/main/examples/index.js)
