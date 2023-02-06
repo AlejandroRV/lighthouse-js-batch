@@ -1,15 +1,19 @@
 {
   "name": "lighthouse-js-batch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Node JS package that runs multiple Lighthouse audit reports programmatically",
-  "main": "./lib/esm/index.js",
-  "types": "./lib/types/index.d.ts",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/types/index.d.ts",
+  "type": "module",
   "scripts": {
     "build": "tsc --project tsconfig.esm.json && tsc --project tsconfig.cjs.json",
-    "start": "node examples",
-    "release": "standard-version"
+    "start": "node examples/index.js",
+    "prepare": "yarn build",
+    "release": "standard-version",
+    "test": "mocha --timeout 20000 src/__tests__/**/*.test.js",
+    "test:coverage": "nyc npm run test"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AlejandroRV/lighthouse-js-batch.git"
@@ -39,14 +43,17 @@
     "lighthouse": "^9.6.8"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
     "standard-version": "^9.5.0"
   },
   "exports": {
     "import": "./lib/esm/index.js",
     "require": "./lib/cjs/index.js",
-    "default": "./lib/esm/index.js"
+    "default": "./lib/cjs/index.js"
   }
 }
